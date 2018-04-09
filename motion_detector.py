@@ -3,6 +3,7 @@
 import RPi.GPIO as GPIO
 import time
 import threading
+from subprocess import call
 
 GPIO.setmode(GPIO.BOARD)
 
@@ -16,12 +17,12 @@ hdmi_on = 0
 def turn_hdmi_off():
     global hdmi_on
     hdmi_on = 0
-    print('turn hdmi off')
+    call("vcgencmd display_power 0", shell=True)
 
 def turn_hdmi_on():
     global hdmi_on
     hdmi_on = 1
-    print('turn hdmi on')
+    call("vcgencmd display_power 1", shell=True)
 
 def both_method(channel):
     global timer_thread
@@ -40,7 +41,6 @@ def both_method(channel):
     if timer_thread is not None:
         if not timer_thread.is_alive():
             timer_thread.start()
-    print(input_signal)
 
 GPIO.add_event_detect(GPIO_PIR, GPIO.BOTH, callback = both_method, bouncetime = 250)
 
