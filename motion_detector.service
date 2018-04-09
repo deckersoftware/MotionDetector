@@ -1,0 +1,15 @@
+[Unit]
+Description=Motion detecor deamon
+After=graphical.target
+After=timers.target
+After=time-sync.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+ExecStart=/usr/bin/python3 /home/pi/MotionDetector/motion_detecor.py
+TimeoutSec=300
+
+[Install]
+WantedBy=multi-user.target
