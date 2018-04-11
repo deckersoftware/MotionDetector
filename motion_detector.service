@@ -1,14 +1,12 @@
 [Unit]
-Description=Motion detecor deamon
-After=graphical.target
-After=timers.target
-After=time-sync.target
+Description=Motion detector deamon
+After=network.target
 
 [Service]
 Type=simple
 User=pi
 Group=pi
-ExecStart=/usr/bin/python3 /home/pi/MotionDetector/motion_detecor.py
+ExecStart=/usr/bin/python3 /home/pi/MotionDetector/motion_detector.py
 TimeoutSec=300
 
 [Install]
