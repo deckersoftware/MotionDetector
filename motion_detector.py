@@ -41,12 +41,12 @@ def motion_detection_event(channel):
 def turn_hdmi_off():
     global hdmi_on
     hdmi_on = 0
-    call("vcgencmd display_power 0", shell=True)
+    call(config_data["turn_off_action"], shell=True)
 
 def turn_hdmi_on():
     global hdmi_on
     hdmi_on = 1
-    call("vcgencmd display_power 1", shell=True)
+    call(config_data["turn_on_action"], shell=True)
 
 def is_turn_on_condition():
     global hdmi_on
