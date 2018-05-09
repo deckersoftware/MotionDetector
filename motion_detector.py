@@ -29,10 +29,10 @@ def motion_detection_event(channel):
         timer_thread.cancel()
 
     if is_turn_on_condition():
-        timer_thread = threading.Timer(30, turn_hdmi_off)
+        timer_thread = threading.Timer(config_data['display_turn_on_duration_in_seconds'], turn_hdmi_off)
 
     if is_turn_off_condition():
-        timer_thread = threading.Timer(5, turn_hdmi_on)
+        timer_thread = threading.Timer(config_data['display_turn_off_duration_in_seconds'], turn_hdmi_on)
 
     if timer_thread is not None:
         if not timer_thread.is_alive():
