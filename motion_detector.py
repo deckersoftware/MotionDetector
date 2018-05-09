@@ -7,21 +7,23 @@ import threading
 import json
 from subprocess import call
 
+config_data = get_config_data()
+
+def get_config_data():
+    config_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.json')
+
+    with open(config_path, 'r') as config_file:
+        config_string = config_file.read()
+        return json.loads(config_string)
+
 GPIO.setmode(GPIO.BOARD)
-config_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.json')
-
-with open(config_path, 'r') as config_file:
-    config_string = config_file.read()
-    config_data = json.loads(config_string)
-
 GPIO_PIR = config_data['motion_input_pin']
-
 GPIO.setup(GPIO_PIR, GPIO.IN)
 
 timer_thread = None
 hdmi_on = 0
 
-def both_method(channel):
+def motion_detection_event(channel):
     global timer_thread
     if timer_thread != None:
         timer_thread.cancel()
@@ -56,7 +58,7 @@ def is_turn_off_condition():
     input_signal = GPIO.input(GPIO_PIR)
     return input_signal == 1 and hdmi_on == 0
 
-GPIO.add_event_detect(GPIO_PIR, GPIO.BOTH, callback = both_method, bouncetime = 250)
+GPIO.add_event_detect(GPIO_PIR, GPIO.BOTH, callback = motion_detection_event, bouncetime = 250)
 
 try:
     while True:
