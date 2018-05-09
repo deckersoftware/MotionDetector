@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import os
 import RPi.GPIO as GPIO
 import time
 import threading
@@ -7,8 +8,9 @@ import json
 from subprocess import call
 
 GPIO.setmode(GPIO.BOARD)
+config_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.json')
 
-with open('config.json', 'r') as config_file:
+with open(config_path, 'r') as config_file:
     config_string = config_file.read()
     config_data = json.loads(config_string)
 
