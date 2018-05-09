@@ -6,15 +6,9 @@ import time
 import threading
 import json
 from subprocess import call
+from config import configuration
 
-def get_config_data():
-    config_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.json')
-
-    with open(config_path, 'r') as config_file:
-        config_string = config_file.read()
-        return json.loads(config_string)
-
-config_data = get_config_data()
+config_data = configuration().get_config_data()
 
 GPIO.setmode(GPIO.BOARD)
 GPIO_PIR = config_data['motion_input_pin']
