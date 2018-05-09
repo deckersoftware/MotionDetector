@@ -3,11 +3,16 @@
 import RPi.GPIO as GPIO
 import time
 import threading
+import json
 from subprocess import call
 
 GPIO.setmode(GPIO.BOARD)
 
-GPIO_PIR = 7
+with open('config.json', 'r') as config_file:
+    config_string = config_file.read()
+    config_data = json.loads(config_string)
+
+GPIO_PIR = config_data['motion_input_pin']
 
 GPIO.setup(GPIO_PIR, GPIO.IN)
 
