@@ -1,47 +1,47 @@
-#!/usr/bin/python3
-
-import time
 import threading
+from subprocess import call
 import RPi.GPIO as GPIO
-from config import Configuration
-from display import Display
 
-CONFIG_DATA = Configuration().get_config_data()
-DISPLAY_OBJECT = Display(CONFIG_DATA)
+class MotionDetector:
+    _timer_thread = None
+    _config_data = None
 
-GPIO.setmode(GPIO.BOARD)
-GPIO_PIR = CONFIG_DATA['motion_input_pin']
-GPIO.setup(GPIO_PIR, GPIO.IN)
+    def __init__(self, config_data):
+        self._motion_detected = False
+        self._config_data = config_data
+        self.gpio_pir = self._config_data['motion_input_pin']
 
-TIMER_THREAD = None
+    def motion_detection_event(self, channel):
+        del channel
+        if self._timer_thread != None:
+            self._timer_thread.cancel()
 
-def motion_detection_event(channel):
-    del channel
-    global TIMER_THREAD
-    if TIMER_THREAD != None:
-        TIMER_THREAD.cancel()
+        input_signal = GPIO.input(self.gpio_pir)
+        if self._is_turn_on_condition(input_signal):
+            self._timer_thread = threading.Timer( \
+                self._config_data['display_turn_on_duration_in_seconds'], \
+                self._no_motion_detected_action \
+                )
 
-    input_signal = GPIO.input(GPIO_PIR)
-    if DISPLAY_OBJECT.is_turn_on_condition(input_signal):
-        TIMER_THREAD = threading.Timer( \
-            CONFIG_DATA['display_turn_on_duration_in_seconds'], \
-            DISPLAY_OBJECT.turn_display_off \
-            )
+        if self._is_turn_off_condition(input_signal):
+            self._timer_thread = threading.Timer( \
+                self._config_data['display_turn_off_duration_in_seconds'], \
+                self._motion_detected_action \
+                )
 
-    if DISPLAY_OBJECT.is_turn_off_condition(input_signal):
-        TIMER_THREAD = threading.Timer( \
-            CONFIG_DATA['display_turn_off_duration_in_seconds'], \
-            DISPLAY_OBJECT.turn_display_on \
-            )
+            if not self._timer_thread.is_alive():
+                self._timer_thread.start()
 
-    if TIMER_THREAD is not None:
-        if not TIMER_THREAD.is_alive():
-            TIMER_THREAD.start()
+    def _no_motion_detected_action(self):
+        self._motion_detected = False
+        call(self._config_data["no_motion_action"], shell=True)
 
-GPIO.add_event_detect(GPIO_PIR, GPIO.BOTH, callback=motion_detection_event, bouncetime=250)
+    def _motion_detected_action(self):
+        self._motion_detected = True
+        call(self._config_data["motion_action"], shell=True)
 
-try:
-    while True:
-        time.sleep(60)
-except KeyboardInterrupt:
-    GPIO.cleanup()
+    def _is_turn_on_condition(self, input_signal):
+        return input_signal == 0 and self._motion_detected
+
+    def _is_turn_off_condition(self, input_signal):
+        return input_signal == 1 and not self._motion_detected
