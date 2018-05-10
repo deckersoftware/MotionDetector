@@ -22,16 +22,10 @@ def motion_detection_event():
 
     input_signal = GPIO.input(GPIO_PIR)
     if DISPLAY_OBJECT.is_turn_on_condition(input_signal):
-        TIMER_THREAD = threading.Timer(
-            CONFIG_DATA['display_turn_on_duration_in_seconds'],
-            DISPLAY_OBJECT.turn_display_off
-            )
+        TIMER_THREAD = threading.Timer(CONFIG_DATA['display_turn_on_duration_in_seconds'], DISPLAY_OBJECT.turn_display_off)
 
     if DISPLAY_OBJECT.is_turn_off_condition(input_signal):
-        TIMER_THREAD = threading.Timer(
-            CONFIG_DATA['display_turn_off_duration_in_seconds'],
-            DISPLAY_OBJECT.turn_display_on
-            )
+        TIMER_THREAD = threading.Timer(CONFIG_DATA['display_turn_off_duration_in_seconds'], DISPLAY_OBJECT.turn_display_on)
 
     if TIMER_THREAD is not None:
         if not TIMER_THREAD.is_alive():
