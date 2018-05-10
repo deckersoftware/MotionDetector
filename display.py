@@ -11,7 +11,7 @@ class display:
         self._display_on = 0
         call(self._config_data["turn_off_action"], shell=True)
 
-    def turn_disply_on(self):
+    def turn_display_on(self):
         self._display_on = 1
         call(self._config_data["turn_on_action"], shell=True)
 

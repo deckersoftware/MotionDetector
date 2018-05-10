@@ -25,7 +25,7 @@ def motion_detection_event(channel):
         timer_thread = threading.Timer(config_data['display_turn_on_duration_in_seconds'], display_object.turn_display_off)
 
     if display_object.is_turn_off_condition(input_signal):
-        timer_thread = threading.Timer(config_data['display_turn_off_duration_in_seconds'], display_object.turn_disply_on)
+        timer_thread = threading.Timer(config_data['display_turn_off_duration_in_seconds'], display_object.turn_display_on)
 
     if timer_thread is not None:
         if not timer_thread.is_alive():
