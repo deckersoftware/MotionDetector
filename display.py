@@ -1,9 +1,9 @@
 from subprocess import call
 
-class display:
+class Display:
     _display_on = 0
     _config_data = None
-    
+
     def __init__(self, config_data):
         self._config_data = config_data
 

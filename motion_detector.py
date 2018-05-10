@@ -3,11 +3,11 @@
 import time
 import threading
 import RPi.GPIO as GPIO
-from config import configuration
-from display import display
+from config import Configuration
+from display import Display
 
-CONFIG_DATA = configuration().get_config_data()
-DISPLAY_OBJECT = display(CONFIG_DATA)
+CONFIG_DATA = Configuration().get_config_data()
+DISPLAY_OBJECT = Display(CONIG_DATA)
 
 GPIO.setmode(GPIO.BOARD)
 GPIO_PIR = CONFIG_DATA['motion_input_pin']
