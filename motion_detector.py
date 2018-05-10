@@ -7,7 +7,7 @@ from config import Configuration
 from display import Display
 
 CONFIG_DATA = Configuration().get_config_data()
-DISPLAY_OBJECT = Display(CONIG_DATA)
+DISPLAY_OBJECT = Display(CONFIG_DATA)
 
 GPIO.setmode(GPIO.BOARD)
 GPIO_PIR = CONFIG_DATA['motion_input_pin']
