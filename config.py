@@ -1,7 +1,7 @@
 import os
 import json
 
-class configuration:
+class Configuration:
     _config_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.json')
 
     def get_config_data(self):
