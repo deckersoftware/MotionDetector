@@ -5,9 +5,10 @@ import RPi.GPIO as GPIO
 class MotionDetector:
     _timer_thread = None
     _config_data = None
+    _motion_detected = False
+    _input_signal = 0
 
     def __init__(self, config_data):
-        self._motion_detected = False
         self._config_data = config_data
         self.gpio_pir = self._config_data['motion_input_pin']
 
@@ -17,6 +18,7 @@ class MotionDetector:
             self._timer_thread.cancel()
 
         self._input_signal = GPIO.input(self.gpio_pir)
+        print(self._input_signal)
         if self._is_turn_on_condition():
             self._timer_thread = threading.Timer( \
                 self._config_data['display_turn_on_duration_in_seconds'], \
