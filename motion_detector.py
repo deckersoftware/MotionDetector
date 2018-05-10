@@ -16,14 +16,14 @@ class MotionDetector:
         if self._timer_thread != None:
             self._timer_thread.cancel()
 
-        input_signal = GPIO.input(self.gpio_pir)
-        if self._is_turn_on_condition(input_signal):
+        self._input_signal = GPIO.input(self.gpio_pir)
+        if self._is_turn_on_condition():
             self._timer_thread = threading.Timer( \
                 self._config_data['display_turn_on_duration_in_seconds'], \
                 self._no_motion_detected_action \
                 )
 
-        if self._is_turn_off_condition(input_signal):
+        if self._is_turn_off_condition():
             self._timer_thread = threading.Timer( \
                 self._config_data['display_turn_off_duration_in_seconds'], \
                 self._motion_detected_action \
@@ -40,8 +40,8 @@ class MotionDetector:
         self._motion_detected = True
         call(self._config_data["motion_action"], shell=True)
 
-    def _is_turn_on_condition(self, input_signal):
-        return input_signal == 0 and self._motion_detected
+    def _is_turn_on_condition(self):
+        return self._input_signal == 0 and self._motion_detected
 
-    def _is_turn_off_condition(self, input_signal):
-        return input_signal == 1 and not self._motion_detected
+    def _is_turn_off_condition(self):
+        return self._input_signal == 1 and not self._motion_detected
