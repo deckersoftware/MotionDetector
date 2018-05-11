@@ -18,7 +18,6 @@ class MotionDetector:
             self._timer_thread.cancel()
 
         self._input_signal = GPIO.input(self.gpio_pir)
-        print(self._input_signal)
         if self._is_turn_on_condition():
             self._timer_thread = threading.Timer( \
                 self._config_data['display_turn_on_duration_in_seconds'], \
