@@ -21,13 +21,15 @@ class MotionDetector:
         if self._is_turn_on_condition():
             self._timer_thread = threading.Timer( \
                 self._config_data['display_turn_on_duration_in_seconds'], \
-                self._no_motion_detected_action \
+                self._no_motion_detected_action, \
+                [self] \
                 )
 
         if self._is_turn_off_condition():
             self._timer_thread = threading.Timer( \
                 self._config_data['display_turn_off_duration_in_seconds'], \
-                self._motion_detected_action \
+                self._motion_detected_action, \
+                [self] \
                 )
 
             if not self._timer_thread.is_alive():
