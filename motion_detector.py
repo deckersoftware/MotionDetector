@@ -20,13 +20,13 @@ class MotionDetector:
         self._input_signal = GPIO.input(self.gpio_pir)
         if self._is_no_motion_detected_anymore_condition():
             self._timer_thread = threading.Timer( \
-                self._config_data['display_turn_on_duration_in_seconds'], \
+                self._config_data['motion_detected_duration_in_seconds'], \
                 self._no_motion_detected_action \
                 )
 
         if self._is_new_motion_detetected_condition():
             self._timer_thread = threading.Timer( \
-                self._config_data['display_turn_off_duration_in_seconds'], \
+                self._config_data['no_motion_detected_duration_in_seconds'], \
                 self._motion_detected_action \
                 )
 
