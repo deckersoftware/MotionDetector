@@ -1,7 +1,7 @@
 {
     "motion_input_pin": 7,
     "motion_detected_duration_in_seconds": 30,
-    "no_motion_detected_duration_in_seconds": 5,
+    "no_motion_detected_duration_in_seconds": 6,
     "no_motion_action": "vcgencmd display_power 0",
     "motion_action": "vcgencmd display_power 1"
 }
