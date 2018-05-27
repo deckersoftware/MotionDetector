@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 User=pi
 Group=pi
-ExecStart=/usr/bin/python3 /home/pi/MotionDetector/motion_detector.py
+ExecStart=/usr/bin/python3 /home/pi/MotionDetector/main.py
 TimeoutSec=300
 
 [Install]

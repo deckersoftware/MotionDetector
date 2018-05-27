@@ -2,6 +2,6 @@
     "motion_input_pin": 7,
     "display_turn_on_duration_in_seconds": 30,
     "display_turn_off_duration_in_seconds": 5,
-    "turn_off_action": "vcgencmd display_power 0",
-    "turn_on_action": "vcgencmd display_power 1"
+    "no_motion_action": "vcgencmd display_power 0",
+    "motion_action": "vcgencmd display_power 1"
 }
