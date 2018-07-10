@@ -8,9 +8,9 @@ class MotionDetector:
     _motion_detected = False
     _input_signal = 0
 
-    def __init__(self, config_data):
-        self._lock = threading.Lock()
+    def __init__(self, config_data, lock):
         self._config_data = config_data
+        self._lock = lock
         self.gpio_pir = self._config_data['motion_input_pin']
 
     def motion_detection_event(self, channel):

@@ -2,11 +2,13 @@
 
 import time
 import RPi.GPIO as GPIO
+import threading
 from config import Configuration
 from motion_detector import MotionDetector
 
 CONFIG_DATA = Configuration().get_config_data()
-MOTION_DETECTOR = MotionDetector(CONFIG_DATA)
+LOCK = threading.Lock()
+MOTION_DETECTOR = MotionDetector(CONFIG_DATA, LOCK)
 
 GPIO.setmode(GPIO.BOARD)
 GPIO_PIR = CONFIG_DATA['motion_input_pin']
