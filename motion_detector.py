@@ -13,8 +13,7 @@ class MotionDetector:
         self._lock = lock
         self.gpio_pir = self._config_data['motion_input_pin']
 
-    def motion_detection_event(self, channel):
-        del channel
+    def motion_detection_event(self):
         self._lock.acquire()
         if self._timer_thread != None:
             self._timer_thread.cancel()
