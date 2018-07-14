@@ -8,12 +8,13 @@ class MotionDetector:
     _motion_detected = False
     _input_signal = 0
 
-    def __init__(self, config_data):
+    def __init__(self, config_data, lock):
         self._config_data = config_data
+        self._lock = lock
         self.gpio_pir = self._config_data['motion_input_pin']
 
-    def motion_detection_event(self, channel):
-        del channel
+    def motion_detection_event(self):
+        self._lock.acquire()
         if self._timer_thread != None:
             self._timer_thread.cancel()
 
@@ -32,6 +33,7 @@ class MotionDetector:
 
         if not self._timer_thread.is_alive():
             self._timer_thread.start()
+        self._lock.release()
 
     def _no_motion_detected_action(self):
         self._motion_detected = False

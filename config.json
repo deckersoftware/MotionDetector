@@ -3,5 +3,14 @@
     "motion_detected_duration_in_seconds": 30,
     "no_motion_detected_duration_in_seconds": 6,
     "no_motion_action": "vcgencmd display_power 0",
-    "motion_action": "vcgencmd display_power 1"
+    "motion_action": "vcgencmd display_power 1",
+    "motion_detection_time": {
+        "monday":{},
+        "tuesday":{},
+        "wednesday":{},
+        "thursday":{},
+        "friday":{},
+        "saturday":{},
+        "sunday":{}
+    }
 }
