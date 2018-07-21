@@ -5,12 +5,12 @@
     "no_motion_action": "vcgencmd display_power 0",
     "motion_action": "vcgencmd display_power 1",
     "motion_detection_time": {
-        "monday":{},
-        "tuesday":{},
-        "wednesday":{},
-        "thursday":{},
-        "friday":{},
-        "saturday":{},
-        "sunday":{}
+        "monday": "5:00 21:00",
+        "tuesday": "5:00 21:00",
+        "wednesday": "5:00 21:00",
+        "thursday": "5:00 21:00",
+        "friday": "5:00 21:00",
+        "saturday": "5:00 21:00",
+        "sunday": "5:00 21:00"
     }
 }
