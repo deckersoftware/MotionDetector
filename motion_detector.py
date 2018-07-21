@@ -1,5 +1,7 @@
 import threading
 from subprocess import call
+from datetime import datetime
+import calendar
 import RPi.GPIO as GPIO
 
 class MotionDetector:
@@ -31,7 +33,7 @@ class MotionDetector:
                 self._motion_detected_action \
                 )
 
-        if not self._timer_thread.is_alive():
+        if not self._timer_thread is None and not self._timer_thread.is_alive():
             self._timer_thread.start()
         self._lock.release()
 
@@ -47,4 +49,18 @@ class MotionDetector:
         return self._input_signal == 0 and self._motion_detected
 
     def _is_new_motion_detetected_condition(self):
+        if not self._is_motion_detection_time():
+            return False
         return self._input_signal == 1 and not self._motion_detected
+
+    def _is_motion_detection_time(self):
+        motion_detection_time = self._get_motion_detection_time()
+        detection_start_time = datetime.strptime(motion_detection_time[0], '%H:%M').time()
+        detection_stop_time = datetime.strptime(motion_detection_time[1], '%H:%M').time()
+        current_time = datetime.now().time()
+        return current_time > detection_start_time and current_time < detection_stop_time
+
+    def _get_motion_detection_time(self):
+        week_day_name = calendar.day_name[datetime.now().weekday()].lower()
+        motion_detection_time_of_today = self._config_data['motion_detection_time'][week_day_name]
+        return motion_detection_time_of_today.split()
