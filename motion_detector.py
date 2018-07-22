@@ -58,7 +58,7 @@ class MotionDetector:
         detection_start_time = datetime.strptime(motion_detection_time[0], '%H:%M').time()
         detection_stop_time = datetime.strptime(motion_detection_time[1], '%H:%M').time()
         current_time = datetime.now().time()
-        return current_time > detection_start_time and current_time < detection_stop_time
+        return current_time >= detection_start_time and current_time <= detection_stop_time
 
     def _get_motion_detection_time(self):
         week_day_name = calendar.day_name[datetime.now().weekday()].lower()
