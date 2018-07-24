@@ -20,6 +20,8 @@ class MotionDetector:
         if self._timer_thread != None:
             self._timer_thread.cancel()
 
+        self._timer_thread = None
+
         self._input_signal = GPIO.input(self.gpio_pir)
         if self._is_no_motion_detected_anymore_condition():
             self._timer_thread = threading.Timer( \
